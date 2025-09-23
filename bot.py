@@ -1,8 +1,9 @@
+import os
 import telebot
 from telebot import types
 
-# Bot tokeningizni shu yerga qo'yasiz
-TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"
+# Tokenni Render Environment Variables dan olamiz
+TOKEN = os.environ.get("TOKEN")
 bot = telebot.TeleBot(TOKEN)
 
 # /start komandasi
@@ -22,7 +23,8 @@ def start(message):
 @bot.message_handler(func=lambda message: True)
 def send_files(message):
     if message.text == "📕 PDF":
-        bot.send_document(message.chat.id, open("fizika_masalalar_yangi_qoshimcha (2).pdf", "rb"))
+        with open("fizika_masalalar_yangi_qoshimcha (2).pdf", "rb") as pdf:
+            bot.send_document(message.chat.id, pdf)
 
     elif message.text == "🖼️ Rasmlar":
         photos = ["rasim1.jpg", "rasim2.jpg", "rasim3.jpg"]
